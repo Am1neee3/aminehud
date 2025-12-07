@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap');
+
+:root {
+    --primary-color: #ffffff;
+    --text-color: #ffffff;
+    --glass-bg: rgba(20, 20, 20, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --health-color: #ff4757;
+    --armor-color: #3742fa;
+    --hunger-color: #ffa502;
+    --thirst-color: #1e90ff;
+    --stamina-color: #ced6e0;
+    --speed-color: #ffffff;
+    --fuel-color: #eccc68;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Outfit', sans-serif;
+    user-select: none;
+}
+
+#hud-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    /* Normally hidden until script init or loaded */
+    display: block; 
+}
+
+.hud-group {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 12px;
+    transition: background 0.3s;
+}
+
+/* Edit Mode Styles */
+.draggable.edit-mode-active {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px dashed rgba(255, 255, 255, 0.4);
+    cursor: move;
+}
+
+/* Status Bars */
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    padding: 8px 12px;
+    border-radius: 50px; /* Pill shape */
+    width: 220px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.status-icon {
+    color: var(--primary-color);
+    font-size: 14px;
+    width: 20px;
+    text-align: center;
+    opacity: 0.9;
+}
+
+.status-bar-bg {
+    flex-grow: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.status-bar-fill {
+    height: 100%;
+    width: 100%; /* JS will adjust this */
+    border-radius: 6px;
+    transition: width 0.3s ease-out;
+    box-shadow: 0 0 10px currentColor; /* Glow effect */
+}
+
+/* Specific Colors */
+#health-fill { background: var(--health-color); color: var(--health-color); }
+#armor-fill { background: var(--armor-color); color: var(--armor-color); }
+#hunger-fill { background: var(--hunger-color); color: var(--hunger-color); }
+#thirst-fill { background: var(--thirst-color); color: var(--thirst-color); }
+#stamina-fill { background: var(--stamina-color); color: var(--stamina-color); }
+
+/* Car HUD */
+#car-container {
+    /* Hidden by default, shown when in vehicle */
+    display: none; 
+}
+
+.speedometer-box {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 15px 25px;
+    text-align: right; /* Speed usually looks best aligned right or center */
+    min-width: 150px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.speed-value {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--speed-color);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+#speed-unit {
+    font-size: 16px;
+    font-weight: 300;
+    opacity: 0.7;
+    margin-left: 5px;
+}
+
+.car-stats-row {
+    display: flex;
+    justify-content: flex-end; /* Align to right under valid speed */
+    gap: 15px;
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.car-stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.car-stat i {
+    font-size: 12px;
+}
+
+.car-stat:first-child i { color: var(--fuel-color); } /* Fuel Icon Color */
+
+/* Edit Overlay */
+#edit-mode-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: -1; /* Behind items when editing, or needs to be carefully managed */
+    pointer-events: none; /* Let clicks pass through to draggable items */
+}
+
+body.is-editing #edit-mode-overlay {
+    display: flex;
+    z-index: 10;
+}
+body.is-editing .chat-box, body.is-editing .other-ui {
+    /* Hide other UI elements if possible, but hard to target external resources */
+}
+
+body.is-editing .hud-group {
+    z-index: 20; /* Bring HUD above overlay */
+}
+
+#edit-mode-overlay h1 {
+    font-size: 40px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+#edit-mode-overlay p {
+    color: rgba(255,255,255,0.7);
+    font-size: 18px;
+}
+
+.key-hint {
+    background: #fff;
+    color: #000;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+}

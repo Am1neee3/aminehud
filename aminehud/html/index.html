@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmineHud</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div id="hud-container">
+        <!-- Player Status Container -->
+        <div id="status-container" class="hud-group draggable" style="left: 1%; bottom: 1%;">
+            
+            <div class="status-item" id="health-wrapper">
+                <div class="status-icon"><i class="fas fa-heart"></i></div>
+                <div class="status-bar-bg">
+                    <div class="status-bar-fill" id="health-fill"></div>
+                </div>
+            </div>
+
+            <div class="status-item" id="armor-wrapper">
+                <div class="status-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="status-bar-bg">
+                    <div class="status-bar-fill" id="armor-fill"></div>
+                </div>
+            </div>
+
+            <div class="status-item" id="hunger-wrapper">
+                <div class="status-icon"><i class="fas fa-hamburger"></i></div>
+                <div class="status-bar-bg">
+                    <div class="status-bar-fill" id="hunger-fill"></div>
+                </div>
+            </div>
+
+            <div class="status-item" id="thirst-wrapper">
+                <div class="status-icon"><i class="fas fa-tint"></i></div>
+                <div class="status-bar-bg">
+                    <div class="status-bar-fill" id="thirst-fill"></div>
+                </div>
+            </div>
+
+            <div class="status-item" id="stamina-wrapper">
+                <div class="status-icon"><i class="fas fa-running"></i></div>
+                <div class="status-bar-bg">
+                    <div class="status-bar-fill" id="stamina-fill"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Car HUD Container -->
+        <div id="car-container" class="hud-group draggable" style="right: 1%; bottom: 1%;">
+            
+            <div class="speedometer-box">
+                <div class="speed-value"><span id="speed-amount">0</span> <span id="speed-unit">KMH</span></div>
+                <div class="car-stats-row">
+                     <div class="car-stat">
+                        <i class="fas fa-gas-pump"></i>
+                        <span id="fuel-amount">100%</span>
+                     </div>
+                     <div class="car-stat">
+                        <i class="fas fa-cogs"></i>
+                        <span id="engine-amount">100%</span>
+                     </div>
+                </div>
+            </div>
+
+            <!-- Optional: RPM Ring could go here, but keeping it modern/minimal text based for now as requested "modern and nice" -->
+            
+        </div>
+        
+        <!-- Edit Mode Overlay -->
+        <div id="edit-mode-overlay">
+            <h1>EDIT MODE</h1>
+            <p>Drag elements to move them. Press <span class="key-hint">ENTER</span> to save and exit.</p>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
